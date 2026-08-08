@@ -1,0 +1,44 @@
+% =========================================================================
+% DICO LAB COURSE | PROJECT 2 | SUMMER 2026
+% Student starter function: calculateBER.m
+% FILE-SET ID: DICO-LAB2-S26-v1.0
+% Release date: 2026-07-30
+% Related exercise: L-2.13
+%
+% Calculates the bit error ratio from two equal-length binary vectors.
+%
+% This file belongs to the official Summer 2026 distribution.
+% Older files without the FILE-SET ID above should not be used.
+% =========================================================================
+function BER = calculateBER(traBits, recBits)
+%CALCULATEBER Calculate the bit error ratio.
+
+traBits = validateBitVectorLocal(traBits, 'traBits');
+recBits = validateBitVectorLocal(recBits, 'recBits');
+assert(numel(traBits) == numel(recBits), ...
+    'traBits and recBits must have the same length.');
+
+% TODO(L-2.13): Count bit errors and divide by the number of transmitted bits.
+totalErrors = sum (traBits ~= recBits);
+BER = totalErrors/numel(traBits);
+
+if isempty(BER)
+    error('DICO:NotImplemented', ...
+        'Complete calculateBER.m for Lab Exercise L-2.13.');
+end
+
+validateattributes(BER, {'numeric'}, ...
+    {'real', 'finite', 'scalar', '>=', 0, '<=', 1});
+end
+
+function bits = validateBitVectorLocal(bits, variableName)
+bits = bits(:).';
+validateattributes(bits, {'numeric', 'logical'}, ...
+    {'vector', 'nonempty', 'real', 'finite'}, mfilename, variableName);
+assert(all(bits == 0 | bits == 1), '%s must contain only 0 and 1.', variableName);
+bits = double(bits);
+end
+
+% =========================================================================
+% END OF FILE | DICO-LAB2-S26-v1.0 | SUMMER 2026
+% =========================================================================

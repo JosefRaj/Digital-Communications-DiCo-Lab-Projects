@@ -1,0 +1,68 @@
+% % LOOP PARAMETERS
+
+    BER_Vector = zeros (6 , length ( EbN0_dB_Vector ));
+    PAM_types = {'BPSK','4QAM','8ASKbipolar'}
+    idx=1;
+    for k=1:length(PAM_types)
+    PAM_type = PAM_types{k};
+  
+
+%EbN0_dB_Vector = 0:1:15;
+% % Simulation Parameters
+% PAM_type = ' BPSK ';
+% PAM_type = '4QAM ';
+%PAM_type = '8ASKbipolar';
+% M = 2;
+% M = 4;
+M = 8;
+       for GrayMappingOn = [false, true]
+
+%GrayMappingOn = 0; % 0 = off , 1 = on
+numberOfBits = 12e4 ;
+f_b = 1e3 ; % symbol / baud rate
+oversamplingFactor = 4; % should be at least 4
+f_c = 5e3 ; % carrier frequency ; should be ca . 5 times f_s
+f_s = f_c * oversamplingFactor ;
+% % Creation of a random bit stream
+traBits = round (rand(1 , numberOfBits));
+% % LOOP START
+curLoop = 0;
+ for EbN0_dB = EbN0_dB_Vector
+curLoop = curLoop + 1;
+% % Transmitter
+traSignal = transmitter(traBits , PAM_type , ...
+GrayMappingOn , f_b , f_c , f_s );
+% % Channel
+recSignal = channel ( traSignal , EbN0_dB , M , f_s , f_b );
+% % Receiver
+recBits = receiver ( recSignal , PAM_type , ...
+GrayMappingOn , f_b , f_c , f_s );
+% % Calculate BER
+BER = calculateBER ( traBits , recBits )
+% % LOOP END
+BER_Vector (idx, curLoop ) = BER ;
+
+
+
+
+
+
+       end
+idx=idx+1;
+
+     end
+
+
+ end
+
+
+figure;
+for idx = 1:1:6
+semilogy(EbN0_dB_Vector, BER_Vector(idx,:))
+hold on;
+grid on;
+xlabel ('SNR');
+ylabel('BER');
+
+
+end
