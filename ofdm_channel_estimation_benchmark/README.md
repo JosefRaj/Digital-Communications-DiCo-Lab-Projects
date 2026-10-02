@@ -1,6 +1,6 @@
 # OFDM Channel-Estimation Benchmark
 
-This local draft is an independent portfolio extension of authentic undergraduate Digital Communications and DSP coursework and the existing MATLAB communications-laboratory repository. It adds a clean, reproducible Python benchmark comparing pilot-aided LS interpolation with covariance-based LMMSE channel estimation in a multipath OFDM link.
+This project is an independent portfolio extension of authentic undergraduate Digital Communications and DSP coursework and the existing MATLAB communications-laboratory repository. It adds a clean, reproducible Python benchmark comparing pilot-aided LS interpolation with covariance-based LMMSE channel estimation in a multipath OFDM link.
 
 ## Coursework connection
 
@@ -29,7 +29,7 @@ python -m unittest discover -s tests -v
 
 This is a link-level simulation and independent coursework extension, not a measured RF implementation, FAU research project, employer project, or over-the-air prototype. LMMSE uses the true assumed power-delay profile and noise variance; the report explicitly discusses this optimistic information requirement.
 
-## CV-safe draft wording
+## Project summary
 
 > Extended digital-communications coursework with a reproducible Python OFDM benchmark comparing pilot-aided LS and covariance-based LMMSE channel estimation across multipath and SNR conditions using BER, EVM and NMSE.
 
